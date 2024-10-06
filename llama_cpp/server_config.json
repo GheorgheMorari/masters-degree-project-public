@@ -5,7 +5,7 @@
   "interrupt_requests": false,
   "models": [
     {
-      "model": "models/phi3_mini_128k_model/phi3_mini_128k_model.gguf",
+      "model": "./llama_cpp/models/phi3_mini_128k_model/phi3_mini_128k_model.gguf",
       "model_alias": "phi3-mini",
       "n_gpu_layers": -1,
       "offload_kqv": true,
@@ -14,7 +14,7 @@
       "n_ctx": 8096
     },
     {
-      "model": "models/mixedbread/mxbai-embed-large-v1-f16.gguf",
+      "model": "./llama_cpp/models/mixedbread/mxbai-embed-large-v1-f16.gguf",
       "model_alias": "mxbai-embed",
       "n_gpu_layers": -1,
       "offload_kqv": true,
