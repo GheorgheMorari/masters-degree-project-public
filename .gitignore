@@ -162,3 +162,4 @@ cython_debug/
 .idea/
 /cpu_and_mobile/
 /phi-3_pipeline_idea/layer_checkpoints/
+*.gguf
