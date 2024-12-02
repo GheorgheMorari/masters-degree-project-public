@@ -1,15 +1,15 @@
 {
-  "host": "0.0.0.0",
+  "host": "localhost",
   "port": 8085,
   "api_key": "masters_degree_project",
   "interrupt_requests": false,
   "models": [
     {
-      "model": "./llama_cpp/models/phi3_mini_128k_model/phi3_mini_128k_model.gguf",
+      "model": "./llama_cpp/models/phi3_mini_model/phi3_mini_model.gguf",
       "model_alias": "phi3-mini",
       "n_gpu_layers": -1,
       "offload_kqv": true,
-      "n_threads": 12,
+      "n_threads": 8,
       "n_batch": 2048,
       "n_ctx": 8096
     },
@@ -18,7 +18,7 @@
       "model_alias": "mxbai-embed",
       "n_gpu_layers": -1,
       "offload_kqv": true,
-      "n_threads": 12,
+      "n_threads": 8,
       "n_batch": 512,
       "n_ctx": 2048,
       "embedding":true

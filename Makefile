@@ -1,17 +1,28 @@
 build-llm-server:
 	@ echo "Building local llm server..."
-	@ pip install llama-cpp-python[server] --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu125
+	@ CMAKE_ARGS="-DLLAMA_CUDA=on"
+	@ FORCE_CMAKE=1
+	@ pip install uv
+	@ uv pip install -r requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu125 --force-reinstall
+	@ echo "Building local llm server... Done"
+
+build-llm-server-windows:
+	@ echo "Building local llm server..."
+	@ pip install uv
+	@ set CMAKE_ARGS = "-DGGML_CUDA=on"
+	@ set FORCE_CMAKE=1
+	@ uv pip install -r requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu125 --force-reinstall --no-cache-dir
 	@ echo "Building local llm server... Done"
 
 start-llm-server:
 	@ echo "Starting local llm server..."
 	@ python -m llama_cpp.server --config_file ./llama_cpp/server_config.json
 
-download-phi3-mini-128k-model:
-	@ echo "Downloading phi3 mini 128k model..."
-	@ mkdir -p ./llama_cpp/models/phi3_mini_128k_model
-	@ rm -f ./llama_cpp/models/phi3_mini_128k_model/phi3_mini_128k_model.gguf
-	@ wget https://huggingface.co/PrunaAI/Phi-3-mini-128k-instruct-GGUF-Imatrix-smashed/resolve/main/Phi-3-mini-128k-instruct.Q4_K_M.gguf?download=true -O ./llama_cpp/models/phi3_mini_128k_model/phi3_mini_128k_model.gguf
+download-phi3-mini-model:
+	@ echo "Downloading phi3 mini model..."
+	@ mkdir -p ./llama_cpp/models/phi3_mini_model
+	@ rm -f ./llama_cpp/models/phi3_mini_model/phi3_mini_model.gguf
+	@ wget https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf/resolve/main/Phi-3-mini-4k-instruct-q4.gguf -O ./llama_cpp/models/phi3_mini_model/phi3_mini_model.gguf
 
 download-mixedbread-embed-model:
 	@ echo "Downloading mixedbread embed model..."
