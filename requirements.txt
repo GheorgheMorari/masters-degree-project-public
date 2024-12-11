@@ -1,4 +1,4 @@
-llama-cpp-python[server]==0.2.90
+llama-cpp-python==0.2.90
 openai==1.55.3
 requests==2.32.3
 instructor==1.7.0

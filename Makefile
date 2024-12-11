@@ -1,17 +1,17 @@
 build-llm-server:
 	@ echo "Building local llm server..."
-	@ CMAKE_ARGS="-DLLAMA_CUDA=on"
+	@ CMAKE_ARGS="-DLLAMA_CUBLAS=on"
 	@ FORCE_CMAKE=1
 	@ pip install uv
-	@ uv pip install -r requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu125 --force-reinstall
+	@ uv pip install -r requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124 --force-reinstall --no-cache-dir
 	@ echo "Building local llm server... Done"
 
 build-llm-server-windows:
 	@ echo "Building local llm server..."
 	@ pip install uv
-	@ set CMAKE_ARGS = "-DGGML_CUDA=on"
+	@ set CMAKE_ARGS = "-DLLAMA_CUBLAS=on"
 	@ set FORCE_CMAKE=1
-	@ uv pip install -r requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu125 --force-reinstall --no-cache-dir
+	@ uv pip install -r requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124 --force-reinstall --no-cache-dir
 	@ echo "Building local llm server... Done"
 
 start-llm-server:
