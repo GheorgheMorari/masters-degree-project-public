@@ -1,0 +1,1 @@
+RAG_RESPONSE_API_ENTRY_POINT_PATH = "/v1/rag_response"
