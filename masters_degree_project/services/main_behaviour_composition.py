@@ -10,8 +10,8 @@ main_behaviour_composition_instruction_template = (
 def main_behaviour_composition(sentence_decomposition_output: SentenceDecompositionOutput,
                                llm_adapter: LLMAdapter) -> MainBehaviourCompositionOutput:
     main_behaviour_composition_output = llm_adapter.generate_instruct_result(
-        main_behaviour_composition_instruction_template.format(sentence_decomposition_output.main_clause,
+        main_behaviour_composition_instruction_template.format(sentence_decomposition_output.concise_main_clause,
                                                                sentence_decomposition_output.behavior_modifier_pairs),
-        MainBehaviourCompositionOutput)
+        MainBehaviourCompositionOutput, temperature=0.0)
 
     return main_behaviour_composition_output

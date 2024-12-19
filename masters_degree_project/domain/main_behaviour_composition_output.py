@@ -1,7 +1,5 @@
-from typing import Annotated
-
-from pydantic import BaseModel, StringConstraints
+from pydantic import BaseModel, constr
 
 
 class MainBehaviourCompositionOutput(BaseModel):
-    main_behaviour: Annotated[str, StringConstraints(max_length=100)]
+    main_behaviour: constr(max_length=100)

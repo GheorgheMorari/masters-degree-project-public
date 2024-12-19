@@ -50,7 +50,8 @@ class LLMAdapter:
         try:
             return self.instructor_client.completions.create(model=self.model_name, response_model=response_model,
                                                              messages=messages, temperature=temperature,
-                                                             stop=stop_tokens, max_retries=BASE_LLM_ADAPTER_MAX_RETRIES)
+                                                             stop=stop_tokens, max_retries=BASE_LLM_ADAPTER_MAX_RETRIES,
+                                                             strict=False, max_tokens=8192)
         except (openai.APIConnectionError, openai.APITimeoutError) as connection_error_exception:
             raise LLMAdapterConnectionErrorException(connection_error_exception)
         except openai.AuthenticationError as exception:
