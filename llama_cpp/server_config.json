@@ -9,16 +9,16 @@
       "model_alias": "gpt-3.5-turbo",
       "n_gpu_layers": -1,
       "offload_kqv": true,
-      "n_threads": 8,
-      "n_batch": 2048,
-      "n_ctx": 8096
+      "n_threads": 1,
+      "n_batch": 4096,
+      "n_ctx": 8192
     },
     {
       "model": "./llama_cpp/models/mixedbread/mxbai-embed-large-v1-f16.gguf",
       "model_alias": "text-embedding-ada-002",
       "n_gpu_layers": -1,
       "offload_kqv": true,
-      "n_threads": 8,
+      "n_threads": 1,
       "n_batch": 512,
       "n_ctx": 512,
       "embedding":true
