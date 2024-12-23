@@ -14,15 +14,15 @@ else
 	@ CMAKE_ARGS="-DLLAMA_CUBLAS=on"
 	@ FORCE_CMAKE=1
 endif
-	@ pip install uv # Using UV for faster requirements installation
+	@ pip install uv
 	@ uv pip install -r requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124 --force-reinstall --no-cache-dir
 	@ echo "Building local llm server... Done"
 
 download-phi3-mini-model:
 	@ echo "Downloading phi3 mini model..."
 ifeq ($(OS),Windows_NT)
-	@ mkdir ./llama_cpp/models/phi3_mini_model 2>nul || exit 0 # Windows mkdir, suppress error if exists
-	@ del /f /q ./llama_cpp/models/phi3_mini_model/phi3_mini_model.gguf 2>nul || exit 0 # Windows del
+	@ mkdir -p .\llama_cpp\models\phi3_mini_model 2>nul || exit 0
+	@ del /f /q .\llama_cpp\models\phi3_mini_model\phi3_mini_model.gguf 2>nul || exit 0
 else
 	@ mkdir -p ./llama_cpp/models/phi3_mini_model
 	@ rm -f ./llama_cpp/models/phi3_mini_model/phi3_mini_model.gguf
@@ -33,8 +33,8 @@ endif
 download-mixedbread-embed-model:
 	@ echo "Downloading mixedbread embed model..."
 ifeq ($(OS),Windows_NT)
-	@ mkdir ./llama_cpp/models/mixedbread 2>nul || exit 0 # Windows mkdir, suppress error if exists
-	@ del /f /q ./llama_cpp/models/mixedbread/mxbai-embed-large-v1-f16.gguf 2>nul || exit 0 # Windows del
+	@ mkdir -p .\llama_cpp\models\mixedbread 2>nul || exit 0
+	@ del /f /q .\llama_cpp\models\mixedbread\mxbai-embed-large-v1-f16.gguf 2>nul || exit 0
 else
 	@ mkdir -p ./llama_cpp/models/mixedbread
 	@ rm -f ./llama_cpp/models/mixedbread/mxbai-embed-large-v1-f16.gguf
