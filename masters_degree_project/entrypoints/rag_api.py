@@ -8,6 +8,7 @@ from masters_degree_project.entrypoints import RAG_RESPONSE_API_ENTRY_POINT_PATH
 
 
 def init_rag():
+    print("Initializing RAG")
     pass
 
 
