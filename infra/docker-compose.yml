@@ -5,16 +5,13 @@ services:
     build:
       context: ./..
       dockerfile: infra/llama-cpp.Dockerfile
-#    deploy:
-#      resources:
-#        reservations:
-#          devices:
-#            - driver: nvidia
-#              count: 1
-#              capabilities: [ gpu ]
-#    volumes:
-#      - ../../models:/opt/models
-#      - ./server_config.json:/opt/server_config.json
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
     networks:
       - llm-net
     ports:
@@ -27,8 +24,20 @@ services:
       dockerfile: infra/rag-api.Dockerfile
     networks:
       - llm-net
+#    volumes:
+#      - rag-api:/opt/masters_degree_project
+    healthcheck:
+      test: curl --fail http://localhost:8082/healthcheck || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     ports:
       - "8086:8086"
 networks:
   llm-net:
     driver: bridge
+
+#volumes:
+# rag-api:
+#   external: false

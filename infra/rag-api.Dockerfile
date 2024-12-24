@@ -27,4 +27,4 @@ RUN uv pip install -r requirements/rag-api.requirements.txt
 
 COPY masters_degree_project masters_degree_project
 EXPOSE 8086
-CMD ["uvicorn", "masters_degree_project.entrypoints.rag_api:app", "--host", "localhost", "--port", "8086"]
+CMD ["uvicorn", "masters_degree_project.entrypoints.rag_api:app", "--host", "0.0.0.0", "--port", "8086"]

@@ -1,4 +1,5 @@
 start-locally: build-llm-server download-phi3-mini-model download-mixedbread-embed-model start-llm-server
+start-docker: download-phi3-mini-model download-mixedbread-embed-model build-docker-compose start-docker-compose
 
 build-llm-server:
 	@ echo "Building local llm server..."
@@ -16,7 +17,7 @@ else
 endif
 	@ pip install uv
 	@ uv pip install -r requirements/llama-cpp.requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124 --force-reinstall --no-cache-dir
-	@ uv pip install -r requirements/requirements.txt
+	@ uv pip install -r requirements/rag-api.requirements.txt
 	@ echo "Building local llm server... Done"
 
 download-phi3-mini-model:
@@ -46,10 +47,10 @@ start-llm-server:
 	@ echo "Starting local llm server..."
 	@ python -m llama_cpp.server --config_file ./llama_cpp/server_config.json
 
-build-docker-server:
-	@ echo "Building docker llm server..."
-	@ sudo docker compose -f infra/docker-compose.yml -p masters build
+build-docker-compose:
+	@ echo "Building docker compose servers..."
+	@ sudo docker compose -f infra/docker-compose.yml -p masters build --force-rm
 
-start-docker-server:
-	@ echo "Starting docker llm server..."
+start-docker-compose:
+	@ echo "Starting docker compose servers..."
 	@ sudo docker compose -f infra/docker-compose.yml -p masters up --detach --force-recreate
