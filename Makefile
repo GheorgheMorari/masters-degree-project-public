@@ -45,3 +45,11 @@ endif
 start-llm-server:
 	@ echo "Starting local llm server..."
 	@ python -m llama_cpp.server --config_file ./llama_cpp/server_config.json
+
+build-docker-server:
+	@ echo "Building docker llm server..."
+	@ sudo docker compose -f infra/docker-compose.yml -p masters build
+
+start-docker-server:
+	@ echo "Starting docker llm server..."
+	@ sudo docker compose -f infra/docker-compose.yml -p masters up --detach --force-recreate

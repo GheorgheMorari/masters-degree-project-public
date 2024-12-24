@@ -1,0 +1,34 @@
+services:
+  llama-cpp:
+    container_name: llama-cpp
+    image: llama-cpp
+    build:
+      context: ./..
+      dockerfile: infra/llama-cpp.Dockerfile
+#    deploy:
+#      resources:
+#        reservations:
+#          devices:
+#            - driver: nvidia
+#              count: 1
+#              capabilities: [ gpu ]
+#    volumes:
+#      - ../../models:/opt/models
+#      - ./server_config.json:/opt/server_config.json
+    networks:
+      - llm-net
+    ports:
+      - "8085:8085"
+  rag-api:
+    container_name: rag-api
+    image: rag-api
+    build:
+      context: ./..
+      dockerfile: infra/rag-api.Dockerfile
+    networks:
+      - llm-net
+    ports:
+      - "8086:8086"
+networks:
+  llm-net:
+    driver: bridge
