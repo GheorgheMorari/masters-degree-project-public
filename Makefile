@@ -1,4 +1,4 @@
-all: build-llm-server download-phi3-mini-model download-mixedbread-embed-model start-llm-server
+start-locally: build-llm-server download-phi3-mini-model download-mixedbread-embed-model start-llm-server
 
 build-llm-server:
 	@ echo "Building local llm server..."
@@ -15,7 +15,8 @@ else
 	@ FORCE_CMAKE=1
 endif
 	@ pip install uv
-	@ uv pip install -r requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124 --force-reinstall --no-cache-dir
+	@ uv pip install -r requirements/llama-cpp.requirements.txt --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124 --force-reinstall --no-cache-dir
+	@ uv pip install -r requirements/requirements.txt
 	@ echo "Building local llm server... Done"
 
 download-phi3-mini-model:
