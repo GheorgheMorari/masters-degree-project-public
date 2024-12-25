@@ -8,6 +8,7 @@ INSIDE_DOCKER = "INSIDE_DOCKER"
 OLD_HOST = "localhost"
 DOCKER_HOST = "host.docker.internal"
 
+
 class RagApiConfig(BaseModel):
     OPENAI_API_KEY: str
     OPENAI_API_BASE: str

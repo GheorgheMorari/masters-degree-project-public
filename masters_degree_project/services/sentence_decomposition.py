@@ -13,6 +13,7 @@ def sentence_decomposition(input_sentence: str, llm_adapter: LLMAdapter) -> Sent
     """
 
     sentence_decomposition_output = llm_adapter.generate_instruct_result(
-        sentence_decomposition_instruction_template.format(input_sentence), SentenceDecompositionOutput, temperature=0.0)
+        sentence_decomposition_instruction_template.format(input_sentence), SentenceDecompositionOutput,
+        temperature=0.0)
 
     return sentence_decomposition_output

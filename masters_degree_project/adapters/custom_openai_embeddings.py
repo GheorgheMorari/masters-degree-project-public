@@ -8,8 +8,9 @@ class LLAMA_CPP_Compatible_OpenAIEmbeddings(OpenAIEmbeddings):
     OpenAIEmbeddings adapter for LLAMA CPP compatibility.
     This adapter removes the pretokenization step and uses the OpenAI API
     """
+
     def _get_len_safe_embeddings(
-        self, texts: List[str], *, engine: str, chunk_size: Optional[int] = None
+            self, texts: List[str], *, engine: str, chunk_size: Optional[int] = None
     ) -> List[List[float]]:
         """
         Generate length-safe embeddings for a list of texts.
