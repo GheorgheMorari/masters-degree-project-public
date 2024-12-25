@@ -19,13 +19,17 @@ services:
   rag-api:
     container_name: rag-api
     image: rag-api
+    depends_on:
+      - llama-cpp
+    env_file:
+      - ../.env
     build:
       context: ./..
       dockerfile: infra/rag-api.Dockerfile
     networks:
       - llm-net
-#    volumes:
-#      - rag-api:/opt/masters_degree_project
+    #    volumes:
+    #      - rag-api:/opt/masters_degree_project
     healthcheck:
       test: curl --fail http://localhost:8082/healthcheck || exit 1
       interval: 10s
