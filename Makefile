@@ -1,5 +1,5 @@
-start-locally: build-llm-server download-phi3-mini-model download-mixedbread-embed-model start-llm-server
-start-docker: download-phi3-mini-model download-mixedbread-embed-model build-docker-compose start-docker-compose
+start-locally: setup-dotenv build-llm-server download-phi3-mini-model download-mixedbread-embed-model start-llm-server
+start-docker: setup-dotenv download-phi3-mini-model download-mixedbread-embed-model build-docker-compose start-docker-compose
 
 build-llm-server:
 	@ echo "Building local llm server..."
@@ -54,3 +54,13 @@ build-docker-compose:
 start-docker-compose:
 	@ echo "Starting docker compose servers..."
 	@ sudo docker compose -f infra/docker-compose.yml -p masters up --detach --force-recreate
+
+
+setup-dotenv:
+	@ echo "Setting up .env file from .env.example..."
+ifeq ($(OS),Windows_NT)
+	@ copy .env.example .env
+else
+	@ cp .env.example .env
+endif
+	@ echo "Setting up .env file from .env.example... Done"
