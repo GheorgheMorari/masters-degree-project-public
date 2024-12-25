@@ -49,11 +49,11 @@ start-llm-server:
 
 build-docker-compose:
 	@ echo "Building docker compose servers..."
-	@ sudo docker compose -f infra/docker-compose.yml -p masters build --force-rm
+	@ sudo docker compose -f infra/docker-compose.yml -p masters rag-api build --force-rm
 
 start-docker-compose:
 	@ echo "Starting docker compose servers..."
-	@ sudo docker compose -f infra/docker-compose.yml -p masters up --detach --force-recreate
+	@ sudo docker compose -f infra/docker-compose.yml -p masters up rag-api --detach --force-recreate
 
 
 setup-dotenv:

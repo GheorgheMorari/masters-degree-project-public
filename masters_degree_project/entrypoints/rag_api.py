@@ -3,9 +3,9 @@ from typing import Optional
 import bs4
 from fastapi import FastAPI, HTTPException
 from langchain_core.runnables import RunnableSequence
+from langchain_openai import OpenAIEmbeddings
 
 from masters_degree_project.adapters.behaviour_indexing_embeddings import BehaviourIndexingEmbeddings
-from masters_degree_project.adapters.custom_openai_embeddings import LLAMA_CPP_Compatible_OpenAIEmbeddings
 from masters_degree_project.adapters.llm_adapter import LLMAdapter
 from masters_degree_project.domain.health_check import DEFAULT_HEALTH_CHECK_ENTRYPOINT_PATH, \
     DEFAULT_HEALTH_CHECK_ENTRYPOINT_PARAMS, HealthCheck
@@ -34,7 +34,7 @@ def init_rag_api():
 
     rag_chain = init_rag_chain(document_splits, openai_model_name=rag_api_config.OPENAI_MODEL_NAME,
                                openai_model_temperature=rag_api_config.OPENAI_MODEL_TEMPERATURE,
-                               embeddings_type=LLAMA_CPP_Compatible_OpenAIEmbeddings,
+                               embeddings_type=OpenAIEmbeddings,
                                embeddings_kwargs={"model": rag_api_config.OPENAI_EMBEDDING_MODEL_NAME})
 
 
@@ -62,7 +62,7 @@ def route_init_modified_rag_api():
                                         openai_model_temperature=rag_api_config.OPENAI_MODEL_TEMPERATURE,
                                         embeddings_type=BehaviourIndexingEmbeddings,
                                         embeddings_kwargs=dict(llm_adapter=llm_adapter,
-                                                               openai_embeddings=LLAMA_CPP_Compatible_OpenAIEmbeddings(
+                                                               openai_embeddings=OpenAIEmbeddings(
                                                                    model=rag_api_config.OPENAI_EMBEDDING_MODEL_NAME)))
 
 

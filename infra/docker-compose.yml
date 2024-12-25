@@ -19,8 +19,8 @@ services:
   rag-api:
     container_name: rag-api
     image: rag-api
-    depends_on:
-      - llama-cpp
+#    depends_on:
+#      - llama-cpp
     env_file:
       - ../.env
     environment:
