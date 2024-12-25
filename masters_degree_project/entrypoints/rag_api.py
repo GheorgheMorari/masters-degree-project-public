@@ -1,14 +1,13 @@
-import os
 from typing import Optional
 
 import bs4
-import dotenv
 from fastapi import FastAPI
 from langchain_core.runnables import RunnableSequence
 
 from masters_degree_project.adapters.custom_openai_embeddings import LLAMA_CPP_Compatible_OpenAIEmbeddings
 from masters_degree_project.domain.health_check import DEFAULT_HEALTH_CHECK_ENTRYPOINT_PATH, \
     DEFAULT_HEALTH_CHECK_ENTRYPOINT_PARAMS, HealthCheck
+from masters_degree_project.domain.rag_api_config import RagApiConfig
 from masters_degree_project.domain.rag_response_input import RagResponseInput
 from masters_degree_project.domain.rag_response_output import RagResponseOutput
 from masters_degree_project.entrypoints import RAG_RESPONSE_API_ENTRY_POINT_PATH
@@ -18,34 +17,22 @@ from masters_degree_project.services.load_documents import load_document_splits_
 rag_chain: Optional[RunnableSequence] = None
 modified_rag_chain: Optional[RunnableSequence] = None
 
-dotenv.load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-OPENAI_API_BASE = os.getenv("OPENAI_API_BASE")
-if not OPENAI_API_KEY or not OPENAI_API_BASE:
-    raise ValueError("OPENAI_API_KEY and OPENAI_API_BASE must be set in the environment variables.")
-
-OPENAI_MODEL_NAME = os.getenv("OPENAI_MODEL_NAME")
-OPENAI_EMBEDDING_MODEL_NAME = os.getenv("OPENAI_EMBEDDING_MODEL_NAME")
-OPENAI_MODEL_TEMPERATURE = float(os.getenv("OPENAI_MODEL_TEMPERATURE"))
-
-DOCUMENT_SPLIT_CHUNK_SIZE = int(os.getenv("DOCUMENT_SPLIT_CHUNK_SIZE"))
-DOCUMENT_SPLIT_CHUNK_OVERLAP = int(os.getenv("DOCUMENT_SPLIT_CHUNK_OVERLAP"))
+rag_api_config = RagApiConfig.from_env()
 
 document_splits = load_document_splits_from_web_sources(
     web_paths=["https://lilianweng.github.io/posts/2023-06-23-agent/"],
-    bs_kwargs={"parse_only": bs4.SoupStrainer(
-        class_=("post-content", "post-title", "post-header"))},
-    split_chunk_size=DOCUMENT_SPLIT_CHUNK_SIZE,
-    split_chunk_overlap=DOCUMENT_SPLIT_CHUNK_OVERLAP)
+    bs_kwargs={"parse_only": bs4.SoupStrainer(class_=("post-content", "post-title", "post-header"))},
+    split_chunk_size=rag_api_config.DOCUMENT_SPLIT_CHUNK_SIZE,
+    split_chunk_overlap=rag_api_config.DOCUMENT_SPLIT_CHUNK_OVERLAP)
 
 
 def init_rag_api():
     global rag_chain
 
-    rag_chain = init_rag_chain(document_splits, openai_model_name=OPENAI_MODEL_NAME,
-                               openai_model_temperature=OPENAI_MODEL_TEMPERATURE,
+    rag_chain = init_rag_chain(document_splits, openai_model_name=rag_api_config.OPENAI_MODEL_NAME,
+                               openai_model_temperature=rag_api_config.OPENAI_MODEL_TEMPERATURE,
                                embeddings_type=LLAMA_CPP_Compatible_OpenAIEmbeddings,
-                               embeddings_kwargs={"model": OPENAI_EMBEDDING_MODEL_NAME})
+                               embeddings_kwargs={"model": rag_api_config.OPENAI_EMBEDDING_MODEL_NAME})
 
 
 app = FastAPI(on_startup=[init_rag_api])

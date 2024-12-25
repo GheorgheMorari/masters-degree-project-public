@@ -23,6 +23,8 @@ services:
       - llama-cpp
     env_file:
       - ../.env
+    environment:
+      - INSIDE_DOCKER=true
     build:
       context: ./..
       dockerfile: infra/rag-api.Dockerfile
